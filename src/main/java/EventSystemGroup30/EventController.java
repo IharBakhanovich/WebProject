@@ -8,15 +8,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.Date;
 
 
 @Controller
 public class EventController {
 
-    private static final Events events = new Events();
+    //private static final Events events = new Events();
+    private final Events events;
+
+    public EventController(Events events) {
+        this.events = events;
+    }
 
     // die Name des Templates leitet an Springframework weiter (hier "events")
     // und Springframework wird die HtmlSeite zusammenbasteln

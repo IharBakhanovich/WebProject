@@ -7,10 +7,12 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Date;
+import org.springframework.stereotype.Component;
 
 /**
  * Eine ServiceClasse um services bereitzustellen
  */
+@Component
 public class Events implements EventsInterface {
 
     private ArrayList<Event> eventsList = new ArrayList<>();
