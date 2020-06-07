@@ -1,5 +1,8 @@
 package EventSystemGroup30.persistance;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -8,12 +11,14 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
 import static EventSystemGroup30.persistance.Event.COLUMN_EVENT_NAME;
 
-@Stateless
+@Repository
+@Transactional
 public class EventDAO {
 
     @PersistenceContext // das Container schaut in persistence.xml, ließt die Einstellungen aus, und erzeugt ein EntitzManager Objekt
@@ -50,7 +55,7 @@ public class EventDAO {
     }
 
     public ArrayList<Event> getAllEvents() {
-        ArrayList<Event> allEvents = null;
+        ArrayList<Event> allEvents = new ArrayList<>();
         //SELECT * FROM event
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Event> query = criteriaBuilder.createQuery(Event.class); // auf velche Tabelle es geht
@@ -76,6 +81,6 @@ public class EventDAO {
                 allEvents = resultList;
             }
 
-        return (ArrayList<Event>) allEvents;
+        return allEvents;
     }
 }

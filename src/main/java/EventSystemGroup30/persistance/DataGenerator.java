@@ -1,16 +1,17 @@
 package EventSystemGroup30.persistance;
 
-import javax.annotation.PostConstruct;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
-import java.util.Date;
-import javax.inject.Inject;
+import org.springframework.stereotype.Service;
 
-@Singleton
-@Startup
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import javax.transaction.Transactional;
+import java.util.Date;
+
+@Service
+@Transactional
 public class DataGenerator {
 
-    @Inject //das Konteiner kümmer darum ob eine existierende Instanz benutzt wird oder eine neue Instanz erzeugt wird
+    @Resource //das Konteiner kümmer darum ob eine existierende Instanz benutzt wird oder eine neue Instanz erzeugt wird
     EventDAO eventDAO;
 
 

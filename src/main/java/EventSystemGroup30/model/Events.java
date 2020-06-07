@@ -2,18 +2,18 @@ package EventSystemGroup30.model;
 
 import EventSystemGroup30.persistance.Event;
 import EventSystemGroup30.persistance.EventDAO;
+import org.springframework.stereotype.Service;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import javax.annotation.Resource;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Eine ServiceClasse um services bereitzustellen
  */
+@Service
+@Transactional
 public class Events implements EventsInterface {
-
-    private ArrayList<Event> eventsList = new ArrayList<>();
 
     // brauchen nicht mehr in der Zukunft explizit Events einzulegen. Daten muss aus dem DB geholt werden.
 //    public Events() {
@@ -28,22 +28,23 @@ public class Events implements EventsInterface {
 //    }
 
     //um Daten aus dem Datenbank zu holen
-    @Inject
-    EventDAO eventDAO;
+    @Resource
+    private EventDAO eventDAO;
 
     @Override
     public void addEvent(String eventName) {
         // geben wir die Arbeit für DAO ein Event aus dem DB zu holen
-        Event event = eventDAO.findEventByName(eventName);
-        if (event != null) {
-            this.eventsList.add(event);
-        }
+        eventDAO.findEventByName(eventName);
+    }
+
+    @Override
+    public void persist(Event event) {
+        eventDAO.persist(event);
     }
 
     @Override
     public ArrayList<Event> getAllEvents() {
-        eventsList = eventDAO.getAllEvents();
-        return eventsList;
+        return eventDAO.getAllEvents();
 
         /*
         Date date1 = new Date();
@@ -71,15 +72,4 @@ public class Events implements EventsInterface {
 
     }
 
-    public ArrayList<Event> getEventsList() {
-        return eventsList;
-    }
-
-    public void setEventsList(ArrayList<Event> eventsList) {
-        this.eventsList = eventsList;
-    }
-
-    public EventDAO getEventDAO() {
-        return eventDAO;
-    }
 }

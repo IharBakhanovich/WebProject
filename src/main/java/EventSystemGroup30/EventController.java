@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,22 +17,15 @@ import java.util.Date;
 @Controller
 public class EventController {
 
-    private static final Events events = new Events();
+    @Resource
+    private Events events;
 
     // die Name des Templates leitet an Springframework weiter (hier "events")
     // und Springframework wird die HtmlSeite zusammenbasteln
     @GetMapping("/events")
     public String getEvents(Model model) {
         // Model ist eine Datenklasse wo wir Werte reinsetzen können und dann in freemarkerTemplate benutzen können
-        events.setEventsList(events.getAllEvents());
-        if (events.getEventsList() == null) {
-            Date date1 = new Date();
-            Event event1 = new Event();
-            event1.setVenue("the List was empty");
-            event1.setDate(date1);
-            events.getEventsList().add(event1);
-        }
-        model.addAttribute("events", events.getEventsList());
+        model.addAttribute("events", events.getAllEvents());
         return "events";
     }
     @GetMapping("/event/{id}")
@@ -71,7 +65,7 @@ public class EventController {
         createdEvent.setVenue(eventVenue);
         createdEvent.setDate(date);
         createdEvent.setEventName(eventName);
-        events.getEventDAO().persist(createdEvent);
+        events.persist(createdEvent);
         //events.getAllEvents().add(createdEvent); // muss man in DB zu speichern
         return getEvents(model);
     }
