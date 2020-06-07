@@ -1,13 +1,14 @@
 package EventSystemGroup30.persistance;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * to develop the entity/Event of the System
  */
 @Entity // können hier die Name der Tabelle im Datenbank schreiben
-public class Event {
+public class Event implements Serializable {
     public static final String COLUMN_EVENT_NAME = "eventName";
     public static final String COLUMN_EVENT_ID = "eventId";
     //private String id = UUID.randomUUID().toString(); für Tests

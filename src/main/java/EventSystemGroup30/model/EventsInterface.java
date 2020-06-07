@@ -8,6 +8,8 @@ public interface EventsInterface {
 
     void addEvent(String eventName);
 
+    void persist(Event event);
+
     ArrayList<Event> getAllEvents();
 
 }
