@@ -10,10 +10,12 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 import static EventSystemGroup30.persistance.Event.COLUMN_EVENT_NAME;
 
 @Stateless
+@Component
 public class EventDAO {
 
     @PersistenceContext // das Container schaut in persistence.xml, ließt die Einstellungen aus, und erzeugt ein EntitzManager Objekt
@@ -50,7 +52,7 @@ public class EventDAO {
     }
 
     public ArrayList<Event> getAllEvents() {
-        ArrayList<Event> allEvents = null;
+        ArrayList<Event> allEvents = new ArrayList<>();
         //SELECT * FROM event
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Event> query = criteriaBuilder.createQuery(Event.class); // auf velche Tabelle es geht
@@ -76,6 +78,6 @@ public class EventDAO {
                 allEvents = resultList;
             }
 
-        return (ArrayList<Event>) allEvents;
+        return allEvents;
     }
 }
